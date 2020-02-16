@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:zero_hunger/components/widgets/explore_list_item.dart';
 import 'package:zero_hunger/utils/colors.dart';
+import 'package:zero_hunger/utils/strings.dart';
 import 'package:zero_hunger/utils/styles.dart';
 
 class RecentScreen extends StatefulWidget {
@@ -64,9 +65,18 @@ class _RecentScreenState extends State<RecentScreen> {
                       size: 35,
                     ),
                   ),
-                  Text(
-                    'Recent',
-                    style: Styles().bigTitleTextStyle,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        Strings.recent,
+                        style: Styles().bigTitleTextStyle,
+                      ),
+                      Text(
+                        Strings.subRecent,
+                        style: Styles().simpleTextStyle,
+                      )
+                    ],
                   )
                 ],
               ),

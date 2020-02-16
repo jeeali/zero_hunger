@@ -1,23 +1,28 @@
-import 'package:clay_containers/clay_containers.dart';
-import 'package:clay_containers/widgets/clay_containers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zero_hunger/components/widgets/text_feild.dart';
 import 'package:zero_hunger/utils/colors.dart';
 import 'package:zero_hunger/utils/strings.dart';
 import 'package:zero_hunger/utils/styles.dart';
 
-class RequestScreen extends StatefulWidget {
-
-  final bool isDonor;
-
-  const RequestScreen({Key key, @required this.isDonor}) : super(key: key);
-
+class RegisterScreen extends StatefulWidget {
   @override
-  _RequestScreenState createState() => _RequestScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _RequestScreenState extends State<RequestScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
+
+  String _userId;
+  bool _isDonor = true;
+  String donation = 'Weekly';
+
+  @override
+  void initState() {
+    getIdPreference().then((value) {
+      setState(() => _userId = value);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +44,7 @@ class _RequestScreenState extends State<RequestScreen> {
                   Padding(
                     padding: const EdgeInsets.only(right: 12),
                     child: Icon(
-                      Icons.help_outline,
+                      Icons.person_outline,
                       size: 35,
                     ),
                   ),
@@ -47,12 +52,8 @@ class _RequestScreenState extends State<RequestScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        widget.isDonor ? Strings.give : Strings.request,
+                        Strings.profile,
                         style: Styles().bigTitleTextStyle,
-                      ),
-                      Text(
-                        widget.isDonor ? Strings.subGive : Strings.subRequest,
-                        style: Styles().simpleTextStyle,
                       )
                     ],
                   )
@@ -60,7 +61,7 @@ class _RequestScreenState extends State<RequestScreen> {
               ),
             ),
             CustomTextField(
-              hint: 'Title',
+              hint: 'Name',
               controller: null,
               isObsecure: false,
               inputType: TextInputType.text,
@@ -68,31 +69,58 @@ class _RequestScreenState extends State<RequestScreen> {
               size: _size,
             ),
             CustomTextField(
-              hint: 'How many persons',
+              hint: 'Location',
               controller: null,
               isObsecure: false,
               inputType: TextInputType.number,
               topMargin: 20,
               size: _size,
             ),
-            CustomTextField(
-              hint: 'Description',
-              controller: null,
-              isObsecure: false,
-              inputType: TextInputType.text,
-              topMargin: 20,
-              size: _size,
+
+            RadioListTile(
+              title: Text('Donor'),
+              value: true,
+              groupValue: _isDonor,
+              onChanged: (value) {
+                setState(() { _isDonor = value; });
+              },
             ),
+            RadioListTile(
+              title: Text('Recipient'),
+              value: false,
+              groupValue: _isDonor,
+              onChanged: (value) {
+                setState(() { _isDonor = value; });
+              },
+            )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: (){},
+        onPressed: (){
+          _isDonor ? _donor() : _rec();
+        },
         label: Text(
-          widget.isDonor ? 'Give' :'Ask',
+          'Register',
           style: Styles().simpleTextStyle,
         ),
       ),
     );
   }
+
+  Future<String> getIdPreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("id");
+  }
+
+  _rec() {
+    Navigator.pushNamedAndRemoveUntil(
+        context, '/rec_navigation', ModalRoute.withName('/rec_navigation'));
+  }
+
+  _donor() {
+    Navigator.pushNamedAndRemoveUntil(
+        context, '/donor_navigation', ModalRoute.withName('/donor_navigation'));
+  }
+
 }

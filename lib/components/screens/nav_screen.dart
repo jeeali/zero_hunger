@@ -8,6 +8,11 @@ import 'package:zero_hunger/components/screens/recent_screen.dart';
 import 'package:zero_hunger/components/screens/request_screen.dart';
 
 class NavScreen extends StatefulWidget {
+
+  final bool isDonor;
+
+  const NavScreen({Key key, @required this.isDonor}) : super(key: key);
+
   @override
   _NavScreenState createState() => _NavScreenState();
 }
@@ -39,11 +44,10 @@ class _NavScreenState extends State<NavScreen> {
             setState(() => _currentIndex = index);
           },
           children: <Widget>[
-//            _requestsExploreTab(),
             _exploreTab(),
             _requestTab(),
-            _myDonationsTab(),
-//            _recentTab(),
+            widget.isDonor ? _myDonationsTab() :
+            _recentTab(),
             _profileTab(),
           ],
         ),
@@ -83,6 +87,18 @@ class _NavScreenState extends State<NavScreen> {
             activeColor: Colors.purple,
             inactiveColor: Colors.black,
           ),
+          widget.isDonor ? BottomNavyBarItem(
+            title: Text(
+              'Donations',
+              style: TextStyle(
+                  fontFamily: 'Rubik',
+                  fontWeight: FontWeight.normal
+              ),
+            ),
+            icon: Icon(Icons.record_voice_over),
+            activeColor: Colors.green,
+            inactiveColor: Colors.black,
+          ) :
           BottomNavyBarItem(
             title: Text(
               'Recent',
@@ -112,16 +128,14 @@ class _NavScreenState extends State<NavScreen> {
     );
   }
 
-//  static _exploreTab() => MyDonationsScreen();
+  _exploreTab() => ExploreScreen(isDonor: widget.isDonor,);
 
-  static _exploreTab() => ExploreScreen();
+  _requestTab() => RequestScreen(isDonor: widget.isDonor,);
 
-  static _requestTab() => RequestScreen();
+  _myDonationsTab() => MyDonationsScreen();
 
-  static _myDonationsTab() => MyDonationsScreen();
+  _recentTab() => RecentScreen();
 
-//  static _recentTab() => RecentScreen();
-
-  static _profileTab() => ProfileScreen();
+  _profileTab() => ProfileScreen(isDonor: widget.isDonor,);
 
 }

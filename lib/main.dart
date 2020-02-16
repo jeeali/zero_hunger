@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:zero_hunger/components/screens/liquid_screen.dart';
 
 import 'components/screens/nav_screen.dart';
+import 'components/screens/register_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -32,7 +33,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/liquid',
       routes: {
         '/liquid': (context) => MyLiquidScreen(),
-        '/navigation': (context) => NavScreen(),
+        '/donor_navigation': (context) => NavScreen(isDonor: true,),
+        '/rec_navigation': (context) => NavScreen(isDonor: false,),
+        '/register': (context) => RegisterScreen(),
       },
     );
   }

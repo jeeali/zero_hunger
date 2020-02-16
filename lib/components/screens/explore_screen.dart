@@ -1,21 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zero_hunger/components/widgets/explore_list_item.dart';
+import 'package:zero_hunger/models/Donation.dart';
+import 'package:zero_hunger/utils/strings.dart';
 import 'package:zero_hunger/utils/styles.dart';
 
 class ExploreScreen extends StatefulWidget {
+
+  final bool isDonor;
+
+  const ExploreScreen({Key key, @required this.isDonor}) : super(key: key);
+
   @override
   _ExploreScreenState createState() => _ExploreScreenState();
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
 
+  List<Donation> _list = new List<Donation>();
+  bool _loading = true;
+
   ScrollController _scrollController;
   bool _isVisible = true;
 
   @override
   void initState() {
+    getFnamePreference().then((fName) {
+      getLnamePreference().then((lName) {
+        getEmailPreference().then((email) {
+
+        });
+      });
+    });
     super.initState();
     _isVisible = true;
     _scrollController = new ScrollController();
@@ -58,21 +76,35 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 children: <Widget>[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(right: 12),
                         child: Icon(
                           OMIcons.home,
-                          size: 35,
+                          size: _isVisible ? 35 : 0.0,
                         ),
                       ),
-                      Text(
-                        'Explore',
-                        style: Styles().bigTitleTextStyle,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            Strings.explore,
+                            style: Styles().bigTitleTextStyle,
+                          ),
+                          Text(
+                            Strings.subExplore,
+                            style: Styles().simpleTextStyle,
+                          )
+                        ],
                       )
                     ],
                   ),
-                  IconButton(icon: Icon(Icons.search), onPressed: (){})
+                  IconButton(
+                    icon: Icon(Icons.search),
+                    iconSize: _isVisible ? 24 : 0,
+                    onPressed: (){},
+                  )
                 ],
               ),
             ),
@@ -96,4 +128,18 @@ class _ExploreScreenState extends State<ExploreScreen> {
       ),
     );
   }
+
+  Future<String> getFnamePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("fName");
+  }
+  Future<String> getLnamePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("lName");
+  }
+  Future<String> getEmailPreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("email");
+  }
+
 }
