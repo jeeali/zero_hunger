@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zero_hunger/components/widgets/explore_list_item.dart';
+import 'package:zero_hunger/components/widgets/n_explore_list_item.dart';
 import 'package:zero_hunger/models/Donation.dart';
 import 'package:zero_hunger/utils/strings.dart';
 import 'package:zero_hunger/utils/styles.dart';
+import 'package:zero_hunger/utils/utils.dart';
+import 'package:http/http.dart' as http;
 
 class ExploreScreen extends StatefulWidget {
 
@@ -18,6 +23,28 @@ class ExploreScreen extends StatefulWidget {
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
+
+  Future getData() async {
+    try {
+      var response = await http.post(
+          Uri.encodeFull(
+            Utils.users,
+          ),
+          headers: {"Accept": "application/json"});
+      List data;
+      var extractedData = json.decode(response.body);
+      data = extractedData['data'];
+      for(int i=0; i< data.length; i++){
+        setState(() {
+          _list.add(Donation(data[i]['title'], data[i]['desc'], 'Lahore', data[i]['persons'], data[i]['updates_at']));
+        });
+      }
+    } on Exception catch (e) {
+      debugPrint("Exception Catched: ${e.toString()}");
+      // 33 is the ERR CODE
+      return '33';
+    }
+  }
 
   List<Donation> _list = new List<Donation>();
   bool _loading = true;
@@ -113,6 +140,14 @@ class _ExploreScreenState extends State<ExploreScreen> {
             child: Scrollbar(
               child: ListView(
                 controller: _scrollController,
+//                itemCount: _list.length,
+//                itemBuilder: (context, index){
+//                  return NExploreListItem(
+//                    title: _list[index].title,
+//                    desc: _list[index].description,
+//                    person: _list[index].persons,
+//                  );
+//                },
                 children: <Widget>[
                   ExploreListItem(),
                   ExploreListItem(),
