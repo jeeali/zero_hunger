@@ -10,6 +10,10 @@ Our application is extremely easy to download, all you have to do is click on th
 
 https://hunger.dedezigners.com/
 
+### APK File
+
+https://drive.google.com/file/d/1gVf_xSiV-siezIM9mvt4YCHW4UGYyokn/view
+
 ### Objectives
 
 **1-	No Food Wastage**
@@ -61,10 +65,6 @@ https://hunger.dedezigners.com/
 
 After the zip file has been downloaded, simply extract it and install the apk file provided inside.
 Please enable installation from unknown sources if required.
-
-## Sample Screenshots
-
-Explain how to run the automated tests for this system
 
 ## Deployment
 
