@@ -26,7 +26,6 @@ Our application is extremely easy to download, all you have to do is click on th
 **1-	Ease in registration**
 <br>Our one click registration function provides convenience to users in registration process, making the registration easier and faster than ever before.
 
-
 **2-	Easy to use**
 <br>Our app provides a user-friendly environment. Even a normal person with minimal or no prior knowledge of this app can learn to use it easily.
 
