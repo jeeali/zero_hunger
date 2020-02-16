@@ -62,22 +62,6 @@ Please enable installation from unknown sources if required.
 
 Explain how to run the automated tests for this system
 
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
 ## Deployment
 
 Share the apk file to user and ask him/her to install the package.
