@@ -6,6 +6,10 @@ This app provides a platform to different restaurants, individuals or NGOs to co
 
 Our application is extremely easy to download, all you have to do is click on the link above and the app package shall begin to download.
 
+### Website
+
+https://hunger.dedezigners.com/
+
 ### Objectives
 
 **1-	No Food Wastage**
@@ -71,6 +75,8 @@ Share the apk file to user and ask him/her to install the package.
 * [Flutter](https://flutter.dev/) - The GUI framework used
 * [Dart](https://dart.dev/) - Programming language used
 * [Android-Studio](https://developer.android.com/studio) - Used to build this app
+* [PHP](https://www.php.net/) - To write APIs
+* [Laravel](https://laravel.com/) - For website
 
 ## Authors
 
